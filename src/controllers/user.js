@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { use } = require("../routes/user");
 
 
 const marvelHeroSignupHandler = async (req,res) => {
@@ -23,4 +24,14 @@ const marvelHeroSignupHandler = async (req,res) => {
 };
 
 
-module.exports = {marvelHeroSignupHandler}
+const marvelOneHeroFindHandler = async (req, res) => {
+    try {
+        const user =await User.find({});
+        res.send(user)
+    } catch (error) {
+        res.send(error)
+    }
+    
+}
+
+module.exports = {marvelHeroSignupHandler,marvelOneHeroFindHandler}
