@@ -26,14 +26,35 @@ const userSchema = new Schema({
     },
     gender:{
         type:String,
+        validate(value){
+           if(!["male","female","others"].includes(value)){
+            throw new Error("Gender is not valid");
+           } 
+        }
     },
     photoURL:{
         type:String,
         default: "https://i.pinimg.com/736x/d5/92/7c/d5927c2014c81c9be05de53ae60dedf2.jpg"
-    }
+    },
+    bio:{
+        type:String,
+        default:"learner",
+    },
+    skills:{
+        type:[String],
+        default: ["c++","java"]
+    },
 },
 { timestamps: true },
 );
+
+
+
+
+
+
+
+
 
 const User = mongoose.model("User",userSchema);
 
