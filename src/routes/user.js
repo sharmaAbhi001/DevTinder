@@ -1,12 +1,10 @@
-const express = require("express");
-const {marvelHeroSignupHandler,marvelOneHeroFindHandler,modifyMarvelHero,marvelHeroLoginHandler} = require("../controllers/user")
-const router = express.Router();
+// const express = require("express");
+// const router = require("./auth");
 
 
-router.post("/signup", marvelHeroSignupHandler)
-router.get("/allhero",marvelOneHeroFindHandler)
-router.patch("/modify",modifyMarvelHero);
-router.post("/login",marvelHeroLoginHandler);
+// router = express.Router();
 
 
-module.exports = router;
+
+// router.get("/profile");
+// router.post("/profile");

@@ -2,8 +2,12 @@ require('dotenv').config();
 const dotenv = require('dotenv')
 const express = require('express');
 const connectToDB = require("./config/database");
-const userRouter = require("./routes/user");
+const authRouter = require("./routes/authRoute");
+const profileRouter = require("./routes/profileRoute")
 const bodyParser    = require('body-parser');
+const cookieParser = require("cookie-parser");
+const checkForAuthenticationCookie = require("./middleware/authorization")
+
 
 const app = express()
 const PORT = 3000;
@@ -13,9 +17,12 @@ const PORT = 3000;
 // parshar
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser());
 
 // Marvel ka routing system 
-app.use("/user",userRouter);
+app.use("/",authRouter);
+
+app.use("/user",profileRouter)
 
 
 connectToDB()
