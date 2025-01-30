@@ -1,11 +1,14 @@
 const express = require("express");
-const {profileViewHnadler} = require("../controllers/profileController");
+const {profileViewHnadler, profileEditHandler} = require("../controllers/profileController");
 const checkForAuthenticationCookie = require("../middleware/authorization");
+const {validateMarvelHeroUpdate} = require("../utils/validation")
+
 
 
 profileRouter = express.Router();
 
-profileRouter.get("/profile/view",checkForAuthenticationCookie("token"),profileViewHnadler);
+profileRouter.get("/profile/view",profileViewHnadler);
+profileRouter.patch("/profile/update", validateMarvelHeroUpdate,profileEditHandler)
 
 
 

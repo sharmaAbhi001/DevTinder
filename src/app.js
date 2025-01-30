@@ -22,7 +22,7 @@ app.use(cookieParser());
 // Marvel ka routing system 
 app.use("/",authRouter);
 
-app.use("/user",profileRouter)
+app.use("/user",checkForAuthenticationCookie("token"),profileRouter)
 
 
 connectToDB()

@@ -1,5 +1,6 @@
 const { model } = require("mongoose");
 const validator = require("validator");
+const { updateSearchIndex } = require("../models/user");
 
 const validateMarvelHeroSignup = (req) =>{
 
@@ -27,6 +28,22 @@ const validateMarvelHeroLogin = (req) =>{
     {
         throw new Error("Please Enter valid Email");
     }
+};
+
+const allowedField = ["gender" , "age", "skills", "photoURL","bio"];
+
+const validateMarvelHeroUpdate = (req,res,next) =>{
+
+  const updates = Object.keys(req.body);
+
+  const isValidUpdate = updates.every(field => allowedField.includes(field));
+  if(!isValidUpdate){
+    return res.status(400)
+    .json({error:"Invalid field in update request"});
+  }
+
+  next();
+
 }
 
-module.exports = {validateMarvelHeroSignup,validateMarvelHeroLogin};
+module.exports = {validateMarvelHeroSignup,validateMarvelHeroLogin,validateMarvelHeroUpdate};
