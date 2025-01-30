@@ -1,9 +1,5 @@
 require('dotenv').config();
 const jwt = require("jsonwebtoken");
- // Consider using an environment variable for the secret
-
-
-
  
 const createTokenForUser  = (user) => {
     const payload = {
@@ -18,8 +14,9 @@ const createTokenForUser  = (user) => {
 
 const validateToken = (token) => {
     try {
-        const payload = jwt.verify(token, secret);
+        const payload = jwt.verify(token, process.env.secrate_key_JWT);
         return payload;
+        
     } catch (error) {
         throw new Error("Invalid token"); 
     }

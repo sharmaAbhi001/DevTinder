@@ -45,6 +45,9 @@ const marvelHeroLoginHandler = async (req, res) => {
     const { emailId, password } = req.body;
     const marvelHero = await User.findOne({ emailId: emailId });
     if (!marvelHero) {
+      res.cookie("token",null, {
+        expires: new Date(Date.now()),
+      });
       return res.status(400).send("Invalid email Credential");
     }
     const isMatch = await bcrypt.compare(password, marvelHero.password);
@@ -54,6 +57,9 @@ const marvelHeroLoginHandler = async (req, res) => {
       res.cookie("token", token);
       res.send("Login successful");
     } else {
+      res.cookie("token",null, {
+        expires: new Date(Date.now()),
+      });
       res.status(400).send("Invalid  pass Credential");
     }
   } catch (error) {
@@ -136,7 +142,7 @@ const marvelHeroPasswordReset = async (req,res) => {
       { new: true }
   );
 
-  return res.status(200).json({ message: "Password updated successfully" });
+  return res.status(200).json({ message: "Password Reset successfully" });
   } catch (error) {
     return res.send(error.message);
   }

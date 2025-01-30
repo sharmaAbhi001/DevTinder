@@ -3,6 +3,8 @@ const { validateToken } = require("../services/userauth");
 const checkForAuthenticationCookie = (cookieName) => {
     return (req, res, next) => {
         const tokenCookieValue = req.cookies[cookieName];
+       
+        
         if (!tokenCookieValue) {
             // If no token is found, proceed to the next middleware/route
             return next();
@@ -10,7 +12,7 @@ const checkForAuthenticationCookie = (cookieName) => {
 
         try {
             const userPayload = validateToken(tokenCookieValue);
-            req.user = userPayload; // Attach the user payload to the request object
+            req.user = userPayload;
         } catch (error) {
             console.error("Token validation error:", error.message);
         }

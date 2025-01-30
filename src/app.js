@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 
 // Marvel ka routing system 
-app.use("/",authRouter);
+app.use("/api/v1",authRouter);
 
-app.use("/user",checkForAuthenticationCookie("token"),profileRouter)
+app.use("/api/vi/user",checkForAuthenticationCookie("token"),profileRouter)
 
 
 connectToDB()
