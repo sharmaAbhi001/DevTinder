@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const { validateMarvelHeroUpdate } = require("../utils/validation");
 
+
+// profile view controller 
 const profileViewHnadler = async (req, res) => {
   const user = req.user;
   if (!req.user) {
@@ -15,6 +17,8 @@ const profileViewHnadler = async (req, res) => {
     }
   }
 };
+
+// profile edit controller 
 
 const profileEditHandler = async (req, res) => {
   try {

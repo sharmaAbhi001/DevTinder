@@ -46,4 +46,12 @@ const validateMarvelHeroUpdate = (req,res,next) =>{
 
 }
 
-module.exports = {validateMarvelHeroSignup,validateMarvelHeroLogin,validateMarvelHeroUpdate};
+
+const passwordValidator = (req) =>{
+ const  {password} = req.body;
+ if(!validator.isStrongPassword(password)){
+  throw new Error("Please Enter a Strong Password");
+};
+
+}
+module.exports = {validateMarvelHeroSignup,validateMarvelHeroLogin,validateMarvelHeroUpdate,passwordValidator};

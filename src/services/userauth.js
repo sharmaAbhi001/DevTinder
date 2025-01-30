@@ -1,7 +1,10 @@
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
+ // Consider using an environment variable for the secret
 
-const secret = "Abhi@@@@@123"; // Consider using an environment variable for the secret
 
+
+ 
 const createTokenForUser  = (user) => {
     const payload = {
         _id: user._id,
@@ -9,7 +12,7 @@ const createTokenForUser  = (user) => {
         photoURL: user.photoURL,
     };
 
-    const token = jwt.sign(payload, secret, { expiresIn: '1d' }); 
+    const token = jwt.sign(payload, process.env.secrate_key_JWT, { expiresIn: '1d' }); 
     return token;
 };
 

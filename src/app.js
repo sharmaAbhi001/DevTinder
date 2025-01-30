@@ -1,5 +1,5 @@
 require('dotenv').config();
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 const express = require('express');
 const connectToDB = require("./config/database");
 const authRouter = require("./routes/authRoute");
@@ -11,7 +11,6 @@ const checkForAuthenticationCookie = require("./middleware/authorization")
 
 const app = express()
 const PORT = 3000;
-
 
 
 // parshar
