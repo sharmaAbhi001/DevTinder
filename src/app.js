@@ -6,11 +6,13 @@ const authRouter = require("./routes/authRoute");
 const profileRouter = require("./routes/profileRoute")
 const bodyParser    = require('body-parser');
 const cookieParser = require("cookie-parser");
-const checkForAuthenticationCookie = require("./middleware/authorization")
+const checkForAuthenticationCookie = require("./middleware/authorization");
+const connectionRouter = require('./routes/connectionRequest');
 
 
 const app = express()
 const PORT = 3000;
+
 
 
 // parshar
@@ -21,7 +23,8 @@ app.use(cookieParser());
 // Marvel ka routing system 
 app.use("/api/v1",authRouter);
 
-app.use("/api/vi/user",checkForAuthenticationCookie("token"),profileRouter)
+app.use("/api/v1/user",checkForAuthenticationCookie("token"),profileRouter)
+app.use("/api/v1",checkForAuthenticationCookie("token"),connectionRouter);
 
 
 connectToDB()

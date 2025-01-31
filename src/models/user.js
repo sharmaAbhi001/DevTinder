@@ -45,6 +45,7 @@ const userSchema = new Schema({
         type:[String],
         default: ["c++","java"]
     },
+
 },
 { timestamps: true },
 );
