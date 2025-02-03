@@ -12,7 +12,7 @@ const checkForAuthenticationCookie = (cookieName) => {
             const userPayload = validateToken(tokenCookieValue);
             req.user = userPayload;
         } catch (error) {
-            console.error("Token validation error:", error.message);
+            return res.status(401).error("Token validation error:", error.message);
         }
         return next(); 
     };

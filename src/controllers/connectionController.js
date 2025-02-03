@@ -24,7 +24,7 @@ const ignoreOrIntrestedHandler = async (req, res) => {
 
     const toUser = await User.findOne({ _id: toUserId });
 
-    if (!toUser){
+    if (!toUser) {
       return res.status(404).json({ message: "Please Provide a valid USer" });
     }
 
@@ -59,4 +59,48 @@ const ignoreOrIntrestedHandler = async (req, res) => {
   }
 };
 
-module.exports = { ignoreOrIntrestedHandler };
+
+//api/v1/connection/review/:status/:requestId
+
+const acceptedOrRejectedReviewHandler = async (req,res) => {
+
+  try {
+
+    const logedInUser = req.user;
+    const {status,requestId} = req.params;
+   
+    if(!req.user)
+    {
+      return res.status(401).send("unathorized access please login!");
+    }
+
+    const allowedStatus = ["accepted","rejected"];
+    if(!allowedStatus.includes(status)){
+      return res.status(400).json({message:"Status not allowed"});
+    }
+
+    const connectionRequest = await ConnectionRequest.findOne({
+      _id:requestId,
+      toUserId:logedInUser._id,
+      status:"intrested",
+    });
+
+    if(!connectionRequest)
+    {
+      return res.status(404).json({message:"Connection Request not found"});
+    }
+
+    connectionRequest.status = status;
+
+    const data = connectionRequest.save();
+
+    return res.status(201).json({message:"you are "+ status +" request",data});
+
+    
+  } catch (error) {
+    return res.status(400).send("Error " + error.message)
+  }
+  
+}
+
+module.exports = { ignoreOrIntrestedHandler,acceptedOrRejectedReviewHandler };

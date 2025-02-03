@@ -8,6 +8,7 @@ const bodyParser    = require('body-parser');
 const cookieParser = require("cookie-parser");
 const checkForAuthenticationCookie = require("./middleware/authorization");
 const connectionRouter = require('./routes/connectionRequest');
+const userRouter = require('./routes/user');
 
 
 const app = express()
@@ -22,9 +23,9 @@ app.use(cookieParser());
 
 // Marvel ka routing system 
 app.use("/api/v1",authRouter);
-
-app.use("/api/v1/user",checkForAuthenticationCookie("token"),profileRouter)
+app.use("/api/v1/",checkForAuthenticationCookie("token"),profileRouter);
 app.use("/api/v1",checkForAuthenticationCookie("token"),connectionRouter);
+app.use("/api/v1/user",checkForAuthenticationCookie("token"),userRouter);
 
 
 connectToDB()

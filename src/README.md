@@ -1,0 +1,3 @@
+- post api thought process User try to enter some data in database -> an attacker can send some random data in to your api so you need to validate every user while post requset and also validate data containe by user during post ;
+
+- get api thoudh process user try to get some data from database -> an attacker become an authorised user to get data -> so alwayse validate data which is given to user ,
