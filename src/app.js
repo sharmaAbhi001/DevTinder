@@ -1,5 +1,6 @@
 require('dotenv').config();
 const dotenv = require('dotenv');
+const cors = require("cors");
 const express = require('express');
 const connectToDB = require("./config/database");
 const authRouter = require("./routes/authRoute");
@@ -15,11 +16,16 @@ const app = express()
 const PORT = 3000;
 
 
+const option = {
+    origin: "http://localhost:5173/",
+  credentials: true
+}
 
 // parshar
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
+app.use(cors(option));
 
 // Marvel ka routing system 
 app.use("/api/v1",authRouter);

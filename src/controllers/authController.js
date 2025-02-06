@@ -18,6 +18,8 @@ const marvelHeroSignupHandler = async (req, res) => {
 
     const UserDetails = req.body;
 
+    console.log("hello");
+    
     const user = new User({
       firstName: UserDetails.firstName,
       lastName: UserDetails.lastName,
@@ -31,7 +33,7 @@ const marvelHeroSignupHandler = async (req, res) => {
     // incrypt data before save by pre method
     await user.save();
     // jwt token create and valid
-    res.send("User Created Successfully!");
+    res.status(201).json({message:"User Created Successfully!"});
   } catch (error) {
     res.send(error.message);
   }
@@ -43,24 +45,26 @@ const marvelHeroLoginHandler = async (req, res) => {
   try {
     validateMarvelHeroLogin(req);
     const { emailId, password } = req.body;
-    const marvelHero = await User.findOne({ emailId: emailId });
-    if (!marvelHero) {
+    
+    const user = await User.findOne({ emailId: emailId });
+    if (!user) {
       res.cookie("token",null, {
         expires: new Date(Date.now()),
       });
-      return res.status(400).send("Invalid email Credential");
+      return res.status(401).send("Invalid email Credential");
     }
-    const isMatch = await bcrypt.compare(password, marvelHero.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       // jwt token genrate hai and send in coockie
-      const token = createTokenForUser(marvelHero);
-      res.cookie("token", token);
-      res.send("Login successful");
+      const token = createTokenForUser(user);
+      res.cookie("token", token); 
+      
+      res.status(200).json({user})
     } else {
       res.cookie("token",null, {
         expires: new Date(Date.now()),
       });
-      res.status(400).send("Invalid  pass Credential");
+      res.status(401).send("Invalid Credential");
     }
   } catch (error) {
     res.status(500).send(error.message);

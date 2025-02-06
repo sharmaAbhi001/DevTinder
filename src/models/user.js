@@ -43,7 +43,7 @@ const userSchema = new Schema({
     },
     skills:{
         type:[String],
-        default: ["c++","java"]
+        default: [""]
     },
 
 },

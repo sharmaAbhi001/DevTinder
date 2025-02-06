@@ -70,6 +70,11 @@ const feedApiHandler = async (req,res) => {
 
     const logedInUser = req.user;
 
+    if(!logedInUser)
+    {
+      return res.json({message:"madharchod login kyu nhi karta hai"})
+    }
+
     const pageNo = req.query.page||1;
     let limit = req.query.limit||10;
 
