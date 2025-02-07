@@ -72,10 +72,10 @@ const marvelHeroLoginHandler = async (req, res) => {
 };
 
 const marvelHeroLogoutHandler = async (req,res) => {
-  res.cookie("token",null, {
+  res.cookie("token", null , {
     expires: new Date(Date.now()),
   });
-  res.send("Logout Successful!!");
+ return  res.status(200).send({message:"Logout Successful!!"});
 }
 
 
@@ -110,7 +110,7 @@ const marvelHeroPasswordFrogetrequest = async (req,res) => {
         from:"devtinderwallah@gmail.com",
         to:emailId,
         subject:"Password Reset Request",
-        text:`Click on this link to generate your new password ${process.env.CLIENT_URL}forget-password/${token}`  
+        text:`Click on this link to generate your new password http://localhost:5173/reset-password/${token}`  
         }
        
       await transporter.sendMail(reciver);
@@ -127,7 +127,10 @@ const marvelHeroPasswordReset = async (req,res) => {
   try {
     passwordValidator(req);
   const {token} = req.params;
+  
   const {password} = req.body;
+
+  
 
   const decode = jwt.verify(token,process.env.secrate_key_JWT);
 
