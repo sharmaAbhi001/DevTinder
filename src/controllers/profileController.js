@@ -5,16 +5,16 @@ const { passwordValidator } = require("../utils/validation");
 
 // profile view controller 
 const profileViewHnadler = async (req, res) => {
-  const user = req.user;
-
+  const logedInUser = req.user;
+   
   
   if (!req.user) {
     res.status(401).send("unathorised user");
   } else {
     try {
-      const userId = user._id;
-      const userData = await User.findById({ _id: userId });
-      res.send(userData);
+      const userId = logedInUser._id;
+      const user= await User.findById({ _id: userId });
+      res.json({user});
     } catch (error) {
       res.send(error.message);
     }
@@ -28,18 +28,18 @@ const profileEditHandler = async (req, res) => {
     if (!req.user) {
       return res.status(401).send({ error: "Unauthorized User" });
     } else {
-      const user = req.user;
-      const userId = user._id;
+      const logedInUser = req.user;
+      const userId = logedInUser._id;
       const updateData = req.body;
 
-      const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      const user = await User.findByIdAndUpdate(userId, updateData, {
         new: true,
         runValidators: true,
       });
-      if (!updatedUser) {
+      if (!user) {
         return res.status(404).send({ error: "User  not found" });
       }
-      return res.send({ updatedUser });
+      return res.status(200).json({user});
     }
   } catch (error) {
     return res.status(500).send({ error: error.message });

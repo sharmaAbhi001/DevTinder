@@ -10,15 +10,19 @@ const cookieParser = require("cookie-parser");
 const checkForAuthenticationCookie = require("./middleware/authorization");
 const connectionRouter = require('./routes/connectionRequest');
 const userRouter = require('./routes/user');
+const http = require("http");
+const initializeSocket = require('./controllers/socket');
 
 
 const app = express()
 const PORT = 3000;
 
+const server = http.createServer(app);
+initializeSocket(server);
 
  
 const option = {
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:5173",
   credentials: true
 }
 
@@ -32,6 +36,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(cors(option));
+
+
  
 // Marvel ka routing system 
 app.use("/api/v1",authRouter);
@@ -43,7 +49,7 @@ app.use("/api/v1/user",checkForAuthenticationCookie("token"),userRouter);
 connectToDB()
 .then(()=>{
     console.log("Database Connection established !");
-    app.listen(PORT,()=> console.log(`server start port ${PORT}`))
+    server.listen(PORT,()=> console.log(`server start port ${PORT}`))
 })
 .catch((err)=>{
     console.log(err);

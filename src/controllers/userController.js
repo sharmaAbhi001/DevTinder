@@ -26,7 +26,10 @@ const showPendingRequestHandler = async (req, res) => {
         .json({ message: "You don't have any connection request !" });
     }
 
-    return res.status(200).json({ message: "Intrested People", intrestedUser });
+   
+
+
+    return res.status(200).json({intrestedUser});
   } catch (error) {
     return res.status(404).send(error.message);
   }

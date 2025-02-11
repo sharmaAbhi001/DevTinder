@@ -5,9 +5,11 @@ const User = require("../models/user");
 
 const ignoreOrIntrestedHandler = async (req, res) => {
   try {
+
+    
     if (!req.user) {
       return res.status(401).json({
-        message: "Unathorised User",
+        message: "Unathorised User123",
       });
     }
 
@@ -51,8 +53,7 @@ const ignoreOrIntrestedHandler = async (req, res) => {
     const data = await connectionRequest.save();
 
     return res.status(201).json({
-      message: req.user.firstName,
-      data,
+      message: req.user.firstName+" "+status+" "+toUser.firstName,
     });
   } catch (error) {
     return res.send(error.message);
