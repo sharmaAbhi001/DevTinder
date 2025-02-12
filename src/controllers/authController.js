@@ -32,6 +32,9 @@ const marvelHeroSignupHandler = async (req, res) => {
 
     // incrypt data before save by pre method
     await user.save();
+
+    const token = createTokenForUser(user);
+    res.cookie("token", token); 
     // jwt token create and valid
     res.status(201).json({message:"User Created Successfully!"});
   } catch (error) {

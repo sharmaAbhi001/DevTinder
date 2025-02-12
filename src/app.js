@@ -12,6 +12,7 @@ const connectionRouter = require('./routes/connectionRequest');
 const userRouter = require('./routes/user');
 const http = require("http");
 const initializeSocket = require('./controllers/socket');
+const chatRouter = require('./routes/chat');
 
 
 const app = express()
@@ -44,6 +45,7 @@ app.use("/api/v1",authRouter);
 app.use("/api/v1/",checkForAuthenticationCookie("token"),profileRouter);
 app.use("/api/v1",checkForAuthenticationCookie("token"),connectionRouter);
 app.use("/api/v1/user",checkForAuthenticationCookie("token"),userRouter);
+app.use("/api/v1/",checkForAuthenticationCookie("token"),chatRouter);
 
 
 connectToDB()
