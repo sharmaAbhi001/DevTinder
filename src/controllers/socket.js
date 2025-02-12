@@ -2,6 +2,8 @@ const socket = require("socket.io");
 const crypto = require("crypto");
 const Chat = require("../models/chat");
 const { log } = require("console");
+const { validateToken } = require("../services/userauth");
+const ConnectionRequest = require("../models/connection");
 
 const generateRoomId = (userId, targetUserId) => {
   roomId = [userId, targetUserId].sort().join("_");
@@ -15,16 +17,44 @@ const initializeSocket = (server) => {
   const io = socket(server, {
     cors: {
       origin: "http://localhost:5173",
+      credentials: true,
     },
   });
 
+
+  // middleware to verify user 
+io.use((socket,next)=>{
+  const token = socket.handshake.auth.token;
+  if(!token)
+  {
+    return next(new Error("Authentication error: No token provided"));
+  }
+  try {
+    const payload = validateToken(token);
+  socket.user = payload;
+  } catch (error) {
+    return next(new Error("Token validation error"))
+  }
+  next();
+})
+
+
   io.on("connection", (socket) => {
     // handel function
-
-    socket.on("joinChat", ({ firstName, targetUserId, userId }) => {
+    socket.on("joinChat",  async ({ firstName, targetUserId, userId }) => {
+      const connection = await ConnectionRequest.findOne({
+        $or:[
+          {fromUserId:targetUserId,toUserId:socket?.user?._id, status: "accepted"},
+          {fromUserId:socket.user._id,toUserId:targetUserId, status: "accepted"}
+        ]
+      });
+      if (!connection) {
+        socket.emit("error", { message: "Madarchod! Gaand marvao, bina friend request ke msg bhejne chale ho" });
+        return;
+      }
+      
+      
       const roomId = generateRoomId(userId, targetUserId);
-
-
       socket.join(roomId);
     });
 
