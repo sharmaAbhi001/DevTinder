@@ -33,6 +33,8 @@ const marvelHeroSignupHandler = async (req, res) => {
     const token = createTokenForUser(user);
     res.cookie("token", token,{
       httpOnly:true,
+      secure:true,
+      sameSite:"None",
     }); 
     // jwt token create and valid
     res.status(201).json({user});
@@ -59,7 +61,13 @@ const marvelHeroLoginHandler = async (req, res) => {
     if (isMatch) {
       // jwt token genrate hai and send in coockie
       const token = createTokenForUser(user);
-      res.cookie("token", token); 
+      res.cookie("token", token,
+        {
+          httpOnly:true,
+          secure:true,
+          sameSite:"None",
+        }
+      ); 
       
       res.status(200).json({user})
     } else {
