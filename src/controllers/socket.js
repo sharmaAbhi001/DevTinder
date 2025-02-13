@@ -23,20 +23,20 @@ const initializeSocket = (server) => {
 
 
   // middleware to verify user 
-io.use((socket,next)=>{
-  const token = socket.handshake.auth.token;
-  if(!token)
-  {
-    return next(new Error("Authentication error: No token provided"));
-  }
-  try {
-    const payload = validateToken(token);
-  socket.user = payload;
-  } catch (error) {
-    return next(new Error("Token validation error"))
-  }
-  next();
-})
+// io.use((socket,next)=>{
+//   const token = socket.handshake.auth.token;
+//   if(!token)
+//   {
+//     return next(new Error("Authentication error: No token provided"));
+//   }
+//   try {
+//     const payload = validateToken(token);
+//   socket.user = payload;
+//   } catch (error) {
+//     return next(new Error("Token validation error"))
+//   }
+//   next();
+// })
 
 
   io.on("connection", (socket) => {
@@ -44,8 +44,8 @@ io.use((socket,next)=>{
     socket.on("joinChat",  async ({ firstName, targetUserId, userId }) => {
       const connection = await ConnectionRequest.findOne({
         $or:[
-          {fromUserId:targetUserId,toUserId:socket?.user?._id, status: "accepted"},
-          {fromUserId:socket.user._id,toUserId:targetUserId, status: "accepted"}
+          {fromUserId:targetUserId,toUserId:userId, status: "accepted"},
+          {fromUserId:userId,toUserId:targetUserId, status: "accepted"}
         ]
       });
       if (!connection) {
