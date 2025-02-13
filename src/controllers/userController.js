@@ -75,7 +75,7 @@ const feedApiHandler = async (req,res) => {
 
     if(!logedInUser)
     {
-      return res.json({message:"madharchod login kyu nhi karta hai"})
+      return res.status(401).json({message:"madharchod login kyu nhi karta hai"})
     }
 
     const pageNo = req.query.page||1;
@@ -109,7 +109,7 @@ const feedApiHandler = async (req,res) => {
     
 
     
-    return res.send(users);
+    return res.status(200).send(users);
 
 
     
