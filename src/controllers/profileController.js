@@ -9,12 +9,12 @@ const profileViewHnadler = async (req, res) => {
    
   
   if (!req.user) {
-    res.status(401).send("unathorised user");
+   return res.status(401).json("unathorised user");
   } else {
     try {
       const userId = logedInUser._id;
       const user= await User.findById({ _id: userId });
-      res.json({user});
+    return  res.status(200).json({user});
     } catch (error) {
       res.send(error.message);
     }
