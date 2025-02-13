@@ -83,6 +83,9 @@ const marvelHeroLoginHandler = async (req, res) => {
 
 const marvelHeroLogoutHandler = async (req,res) => {
     res.cookie("token", null , {
+      httpOnly:true,
+      secure:true,
+      sameSite:"None",
     expires: new Date(Date.now()),
   });
  return  res.status(200).send({message:"Logout Successful!!"});
