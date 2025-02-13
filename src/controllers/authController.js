@@ -33,7 +33,6 @@ const marvelHeroSignupHandler = async (req, res) => {
     const token = createTokenForUser(user);
     res.cookie("token", token,{
       httpOnly:true,
-      sameSite:none,
     }); 
     // jwt token create and valid
     res.status(201).json({user});
