@@ -37,9 +37,9 @@ const marvelHeroSignupHandler = async (req, res) => {
       sameSite:"Lex",
     }); 
     // jwt token create and valid
-    res.status(201).json({user});
+   return res.status(201).json({user});
   } catch (error) {
-    res.send(error.message);
+  return  res.send(error.message);
   }
 };
 
@@ -69,12 +69,12 @@ const marvelHeroLoginHandler = async (req, res) => {
         }
       ); 
       
-      res.status(200).json({user})
+    return res.status(200).json({user})
     } else {
       res.cookie("token",null, {
         expires: new Date(Date.now()),
       });
-      res.status(401).send("Invalid Credential");
+    return  res.status(401).send("Invalid Credential");
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -82,7 +82,7 @@ const marvelHeroLoginHandler = async (req, res) => {
 };
 
 const marvelHeroLogoutHandler = async (req,res) => {
-  res.cookie("token", null , {
+    res.cookie("token", null , {
     expires: new Date(Date.now()),
   });
  return  res.status(200).send({message:"Logout Successful!!"});
