@@ -52,8 +52,6 @@ io.use((socket,next)=>{
         socket.emit("error", { message: "Madarchod! Gaand marvao, bina friend request ke msg bhejne chale ho" });
         return;
       }
-      
-      
       const roomId = generateRoomId(userId, targetUserId);
       socket.join(roomId);
     });
@@ -86,7 +84,6 @@ io.use((socket,next)=>{
 
           io.to(roomId).emit("messageReceived", { firstName, text, userId });
         } catch (error) {
-          console.log(error);
         }
       }
     );

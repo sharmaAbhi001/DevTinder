@@ -26,7 +26,6 @@ chatRouter.get("/chat/:id", async (req, res) => {
 
     res.send(chat);
   } catch (error) {
-    console.log(error);
   }
 });
 

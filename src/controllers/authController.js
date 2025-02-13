@@ -16,10 +16,7 @@ const marvelHeroSignupHandler = async (req, res) => {
     // validation of data
     validateMarvelHeroSignup(req);
 
-    const UserDetails = req.body;
-
-    console.log("hello");
-    
+    const UserDetails = req.body;    
     const user = new User({
       firstName: UserDetails.firstName,
       lastName: UserDetails.lastName,
@@ -36,7 +33,7 @@ const marvelHeroSignupHandler = async (req, res) => {
     const token = createTokenForUser(user);
     res.cookie("token", token); 
     // jwt token create and valid
-    res.status(201).json({message:"User Created Successfully!"});
+    res.status(201).json({user});
   } catch (error) {
     res.send(error.message);
   }
