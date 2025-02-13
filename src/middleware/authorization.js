@@ -17,6 +17,8 @@ const checkForAuthenticationCookie = (cookieName) => {
             return res.status(401).error("Token validation error:", error.message);
         }
         return next(); 
+
+        
     };
 };
 
