@@ -51,9 +51,7 @@ const marvelHeroLoginHandler = async (req, res) => {
     validateMarvelHeroLogin(req);
     const { emailId, password } = req.body;
     
-    const user = await User.findOneAndUpdate({ emailId: emailId },{status:"online"},{
-      new:true,
-    });
+    const user = await User.findOne({ emailId: emailId });
 
 console.log(user);
 
@@ -66,6 +64,9 @@ console.log(user);
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       // jwt token genrate hai and send in coockie
+         await User.findOneAndUpdate({ emailId: emailId },{status:"online"},{
+        new:true,
+      });
 
       const token = createTokenForUser(user);
       res.cookie("token", token,
