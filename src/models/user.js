@@ -45,6 +45,15 @@ const userSchema = new Schema({
         type:[String],
         default: [""]
     },
+    status:{
+        type:String,
+        validate(value){
+            if(!["online","offline"].includes(value)){
+                throw new Error("Status is not valid");
+            }
+        },
+        default:"offline",
+    }
 
 },
 { timestamps: true },

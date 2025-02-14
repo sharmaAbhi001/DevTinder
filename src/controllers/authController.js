@@ -25,6 +25,7 @@ const marvelHeroSignupHandler = async (req, res) => {
       age: UserDetails.age,
       gender: UserDetails.gender,
       skills: UserDetails.skills,
+      status:UserDetails.status,
     });
 
     // incrypt data before save by pre method
@@ -50,7 +51,12 @@ const marvelHeroLoginHandler = async (req, res) => {
     validateMarvelHeroLogin(req);
     const { emailId, password } = req.body;
     
-    const user = await User.findOne({ emailId: emailId });
+    const user = await User.findOneAndUpdate({ emailId: emailId },{status:"online"},{
+      new:true,
+    });
+
+console.log(user);
+
     if (!user) {
       res.cookie("token",null, {
         expires: new Date(Date.now()),
@@ -60,6 +66,7 @@ const marvelHeroLoginHandler = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       // jwt token genrate hai and send in coockie
+
       const token = createTokenForUser(user);
       res.cookie("token", token,
         {
@@ -77,11 +84,14 @@ const marvelHeroLoginHandler = async (req, res) => {
     return  res.status(401).send("Invalid Credential");
     }
   } catch (error) {
+    console.log(error);
+    
     res.status(500).send(error.message);
   }
 };
 
-const marvelHeroLogoutHandler = async (req,res) => {
+const marvelHeroLogoutHandler = async (req,res) => {  
+   await User.findOneAndUpdate({emailId:req.user.emailId},{status:"offline"},{new:true});
     res.cookie("token", null , {
       httpOnly:true,
       secure:true,
@@ -90,7 +100,6 @@ const marvelHeroLogoutHandler = async (req,res) => {
   });
  return  res.status(200).send({message:"Logout Successful!!"});
 }
-
 
 const marvelHeroPasswordFrogetrequest = async (req,res) => {
 

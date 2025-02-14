@@ -45,7 +45,7 @@ const showAllConnectionHandler = async (req, res) => {
       return res.status(401).send("login kar bsdk!");
     }
 
-    userId = req.user._id;
+   const userId = req.user._id;
 
     const allConnection = await ConnectionRequest.find({
       $or: [{ fromUserId: userId }, { toUserId: userId }],
