@@ -23,6 +23,7 @@ initializeSocket(server);
 
  
 const option = {
+    // origin:"http://localhost:5173",
     origin: "https://dev-tinder-frontend-alpha.vercel.app",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
