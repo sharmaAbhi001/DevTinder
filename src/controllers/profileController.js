@@ -55,7 +55,6 @@ const profilePasswordUpdateHandler = async (req,res) =>{
 
   const {emailId} = req.user;
  const {password} = req.body;
- console.log("hiii",emailId,password);
  
 
  const user = await User.findOne({emailId:emailId});

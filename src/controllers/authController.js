@@ -53,8 +53,6 @@ const marvelHeroLoginHandler = async (req, res) => {
     
     const user = await User.findOne({ emailId: emailId });
 
-console.log(user);
-
     if (!user) {
       res.cookie("token",null, {
         expires: new Date(Date.now()),
@@ -84,9 +82,7 @@ console.log(user);
       });
     return  res.status(401).send("Invalid Credential");
     }
-  } catch (error) {
-    console.log(error);
-    
+  } catch (error) { 
     res.status(500).send(error.message);
   }
 };
