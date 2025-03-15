@@ -119,7 +119,7 @@ const marvelHeroPasswordFrogetrequest = async (req,res) => {
     
        const transporter = nodemailer.createTransport({
         service:"gmail",
-        secure:"trur",
+        secure:"true",
         auth:{
           user:process.env.My_Email,
           pass:process.env.My_Email_pass
