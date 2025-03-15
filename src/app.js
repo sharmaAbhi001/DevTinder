@@ -24,7 +24,7 @@ initializeSocket(server);
  
 const option = {
     // origin:"http://localhost:5173",
-    https:"https://connectkaro-alpha.vercel.app",
+    origin:"https://connectkaro-alpha.vercel.app",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
 
