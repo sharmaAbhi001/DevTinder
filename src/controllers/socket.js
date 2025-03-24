@@ -17,7 +17,7 @@ const initializeSocket = (server) => {
   const io = socket(server, {
     cors: {
       // origin:"http://localhost:5173",
-      origin: "https://dev-tinder-frontend-alpha.vercel.app",
+      origin: "https://connectkaro-alpha.vercel.app",
       credentials: true,
     },
   });
