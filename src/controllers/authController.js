@@ -14,6 +14,8 @@ const nodemailer = require("nodemailer");
 const marvelHeroSignupHandler = async (req, res) => {
   try {
     // validation of data
+
+  
     validateMarvelHeroSignup(req);
 
     const UserDetails = req.body;    
@@ -48,6 +50,7 @@ const marvelHeroSignupHandler = async (req, res) => {
 // login marvel hero
 const marvelHeroLoginHandler = async (req, res) => {
   try {
+
     validateMarvelHeroLogin(req);
     const { emailId, password } = req.body;
     

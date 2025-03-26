@@ -10,7 +10,7 @@ const validateMarvelHeroSignup = (req) =>{
       {
         throw new Error("Name is not Valid");
       }
-    else if(!firstName >=4 || !firstName <50)
+    else if(firstName.length < 4 || firstName.length > 50)
         {
           throw new Error("Please Enter valid Name ");
         }     
