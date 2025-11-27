@@ -24,7 +24,7 @@ initializeSocket(server);
  
 const option = {
     // origin:"http://localhost:5173",
-    origin:"https://connectkaro-alpha.vercel.app",
+    origin:"https://connect.codecampus.in",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
 
